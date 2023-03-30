@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
+use App\Repository\RoleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,13 +23,14 @@ class CrudUtilisateurController extends AbstractController
     }
 
     #[Route('/new', name: 'app_crud_utilisateur_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UtilisateurRepository $utilisateurRepository): Response
+    public function new(Request $request, UtilisateurRepository $utilisateurRepository, RoleRepository $roleRepository): Response
     {
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $utilisateur->setRole($roleRepository->find(1));
             $utilisateurRepository->save($utilisateur, true);
 
             return $this->redirectToRoute('app_crud_utilisateur_index', [], Response::HTTP_SEE_OTHER);
@@ -69,7 +71,7 @@ class CrudUtilisateurController extends AbstractController
     #[Route('/{id}', name: 'app_crud_utilisateur_delete', methods: ['POST'])]
     public function delete(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $utilisateur->getId(), $request->request->get('_token'))) {
             $utilisateurRepository->remove($utilisateur, true);
         }
 
