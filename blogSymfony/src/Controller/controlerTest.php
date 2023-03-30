@@ -25,4 +25,12 @@ class controlerTest extends AbstractController
         $this->addFlash('success', 'bien jouer');
         return $this->render('/index.html.twig');
     }
+
+    #[Route('/connexion', name: 'connexion')]
+    public function connexion()
+    {
+        $this->addFlash('success', 'action effectuée avec succès');
+        $this->addFlash('success', 'bien jouer');
+        return $this->render('/connexion.html.twig');
+    }
 }
