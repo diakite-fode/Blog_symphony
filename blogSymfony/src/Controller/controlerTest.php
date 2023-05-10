@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/route1')]
+//#[Route('/route1', name: 'route1')]
 class controlerTest extends AbstractController
 {
     #[Route('/test/{x}/{y}', name: 'addition')]

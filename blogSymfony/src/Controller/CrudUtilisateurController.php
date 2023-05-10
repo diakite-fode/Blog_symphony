@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+//ajout pour hasher mot de passe
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/crud/utilisateur')]
 class CrudUtilisateurController extends AbstractController
@@ -23,14 +25,24 @@ class CrudUtilisateurController extends AbstractController
     }
 
     #[Route('/new', name: 'app_crud_utilisateur_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UtilisateurRepository $utilisateurRepository, RoleRepository $roleRepository): Response
-    {
+    public function new(
+        Request $request,
+        UtilisateurRepository $utilisateurRepository,
+        RoleRepository $roleRepository,
+        //ajout pour hasher mot de passe
+        UserPasswordHasherInterface $passwordHasher
+        //fin ajout
+    ): Response {
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $utilisateur->setRole($roleRepository->find(1));
+            //ajout
+            $hashedPassword = $passwordHasher->hashPassword($utilisateur, $utilisateur->getPassword());
+            $utilisateur->setPassword($hashedPassword);
+            //fin ajout
             $utilisateurRepository->save($utilisateur, true);
 
             return $this->redirectToRoute('app_crud_utilisateur_index', [], Response::HTTP_SEE_OTHER);
