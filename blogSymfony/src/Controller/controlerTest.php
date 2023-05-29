@@ -21,7 +21,11 @@ class controlerTest extends AbstractController
     #[Route('/acceuil', name: 'acceuil')]
     public function acceuil()
     {
-        return $this->render('/index.html.twig');
+        $userConnected = $this->getUser();
+        $data = [
+            "user" => $userConnected->getUserIdentifier()
+        ];
+        return $this->render('/index.html.twig', $data);
     }
 
     #[Route('/connexion', name: 'connexion')]
