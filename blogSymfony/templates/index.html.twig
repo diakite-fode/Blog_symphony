@@ -2,5 +2,21 @@
 {% block title %}index{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur la Page d'acceuil  {{ user }}</h1>
+    <h1>Bienvenue sur la Page d'acceuil</h1>
+    <h3>Liste des articles</h3>
+    {% if articles|length > 0 %}
+        {% for article in articles %}
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{article.titre}}</h3>
+                <p class="card-text">{{article.texte}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Aucun articles enregistré</p>
+    {% endif %}
+
 {% endblock %}
+
+

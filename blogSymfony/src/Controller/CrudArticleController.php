@@ -20,6 +20,16 @@ class CrudArticleController extends AbstractController
             'articles' => $articleRepository->findAll(),
         ]);
     }
+    #[Route('/{user}', name: 'user_article', methods: ['GET'])]
+    public function userArticles(ArticleRepository $articleRepository, $user): Response
+    {
+        $criteria = [
+            "utilisateur" => $user
+        ];
+        return $this->render('crud_article/index.html.twig', [
+            'articles' => $articleRepository->findBy($criteria),
+        ]);
+    }
 
     #[Route('/new', name: 'app_crud_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository): Response

@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\DependencyInjection\Security\UserProvider\EntityFactory;
 
 //#[Route('/route1', name: 'route1')]
 class controlerTest extends AbstractController
@@ -19,13 +25,12 @@ class controlerTest extends AbstractController
     }
 
     #[Route('/acceuil', name: 'acceuil')]
-    public function acceuil()
+    public function acceuil(ManagerRegistry $manager)
     {
-        $userConnected = $this->getUser();
-        $data = [
-            "user" => $userConnected->getUserIdentifier()
-        ];
-        return $this->render('/index.html.twig', $data);
+        //Récupération des articles pour les afficher en pages d'acceuil
+        $repository = $manager->getRepository(Article::class);
+        $articles = $repository->findAll();
+        return $this->render('/index.html.twig', ['articles' => $articles]);
     }
 
     #[Route('/connexion', name: 'connexion')]
