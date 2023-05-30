@@ -45,8 +45,9 @@ class CrudUtilisateurController extends AbstractController
             //fin ajout
             $utilisateurRepository->save($utilisateur, true);
 
-            // return $this->redirectToRoute('app_crud_utilisateur_index', [], Response::HTTP_SEE_OTHER);
-            return $this->redirectToRoute('acceuil', [], Response::HTTP_SEE_OTHER);
+
+            //redirection vers la page de connexion, après inscription
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('crud_utilisateur/new.html.twig', [
