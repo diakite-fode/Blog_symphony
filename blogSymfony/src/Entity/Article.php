@@ -28,9 +28,13 @@ class Article
     #[ORM\ManyToMany(targetEntity: MotsCles::class, inversedBy: 'articles')]
     private Collection $motsCles;
 
+    #[ORM\OneToMany(mappedBy: 'idArticle', targetEntity: Commentaire::class, orphanRemoval: true)]
+    private Collection $commentaires;
+
     public function __construct()
     {
         $this->motsCles = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +98,36 @@ class Article
     public function removeMotsCle(MotsCles $motsCle): self
     {
         $this->motsCles->removeElement($motsCle);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setIdArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getIdArticle() === $this) {
+                $commentaire->setIdArticle(null);
+            }
+        }
 
         return $this;
     }

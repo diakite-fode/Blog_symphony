@@ -42,9 +42,9 @@
 					{# Affichage menu selon si un utilisateur est connecter ou non #}
 					{% block connexion %}
 						{% if app.user != null %}
-							{% if app.user.role is in_array([2]) %}
-								<li><a href="{{path('user_article',{'user' : app.user.id})}}">Gérer les articles</a></li>
-								<li><a href="{{path('app_crud_article_new')}}">Gérer les utilisateurs </a></li>
+							{% if app.user.roles[0] == "2" %}
+								<li><a href="{{path('app_crud_article_index')}}">Gérer les articles</a></li>
+								<li><a href="{{path('app_crud_utilisateur_index')}}">Gérer les utilisateurs </a></li>
 							{% endif %}
 								<li><a href="{{path('user_article',{'user' : app.user.id})}}">Mes articles</a></li>
 								<li><a href="{{path('app_crud_article_new')}}">Ajouter un article</a></li>
