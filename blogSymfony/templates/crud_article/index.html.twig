@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
+                <th>Auteur</th>
                 <th>Texte</th>
                 <th>actions</th>
             </tr>
@@ -19,6 +20,7 @@
             <tr>
                 <td>{{ article.id }}</td>
                 <td>{{ article.titre }}</td>
+                <td>{{ article.utilisateur.email }}</td>
                 <td>{{ article.texte }}</td>
                 <td>
                     <a href="{{ path('app_crud_article_show', {'id': article.id}) }}">show</a>

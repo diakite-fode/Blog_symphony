@@ -2,17 +2,33 @@
 {% block title %}index{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur la Page d'acceuil</h1>
-    <h3>Liste des articles</h3>
+    <h3 id="article">Liste des articles</h3>
     {% if articles|length > 0 %}
+    <table class="table">
+      <thead>
+            <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Article</th>
+            </tr>
+        </thead>
+        <tbody>
+
         {% for article in articles %}
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">{{article.titre}}</h3>
-                <p class="card-text">{{article.texte}}</p>
-            </div>
-        </div>
+        {% set idArticle = article.id %}
+        {% set idUser = app.user %}
+            <tr>
+                <th scope="row">{{article.id}}</th>
+                <td> 
+                    <a href="{{ path('app_crud_commentaire_new',{idArticle:idArticle,idUser:idUser.id}) }}">
+                    {{article.titre}}</a>
+                </td>
+                <td>{{article.texte}}</td>        
+            </tr>
+
         {% endfor %}
+        </tbody>
+    </table>
     {% else %}
         <p>Aucun articles enregistré</p>
     {% endif %}

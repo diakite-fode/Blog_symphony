@@ -22,7 +22,7 @@ class Commentaire
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?article $idArticle = null;
+    private ?Article $idArticle = null;
 
     public function getId(): ?int
     {
@@ -53,12 +53,12 @@ class Commentaire
         return $this;
     }
 
-    public function getIdArticle(): ?article
+    public function getIdArticle(): ?Article
     {
         return $this->idArticle;
     }
 
-    public function setIdArticle(?article $idArticle): self
+    public function setIdArticle(?Article $idArticle): self
     {
         $this->idArticle = $idArticle;
 

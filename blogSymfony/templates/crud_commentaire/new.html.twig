@@ -4,8 +4,30 @@
 
 {% block body %}
     <h1>Create new Commentaire</h1>
+    
+    <h3>Titre article: {{article.titre}}</h3>
+    <p>{{article.texte}}</p>
+
+    <table class="table">
+      <thead>
+            <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Auteur</th>
+            <th scope="col">Commentaire</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for commentaire in commentaires %}
+        <tr>
+            <th scope="row">{{commentaire.id}}</th>
+            <td>{{commentaire.utilisateur.email}}</td>
+            <td>{{commentaire.commentaire}}</td>        
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table> 
 
     {{ include('crud_commentaire/_form.html.twig') }}
 
-    <a href="{{ path('app_crud_commentaire_index') }}">back to list</a>
 {% endblock %}

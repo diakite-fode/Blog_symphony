@@ -38,15 +38,28 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
-					<li class="active"><a href="{{path('acceuil')}}">Acceuil</a></li>
+					<li><a href="{{path('acceuil')}}">Acceuil</a></li>
 					{# Affichage menu selon si un utilisateur est connecter ou non #}
 					{% block connexion %}
 						{% if app.user != null %}
 							{% if app.user.roles[0] == "2" %}
-								<li><a href="{{path('app_crud_article_index')}}">Gérer les articles</a></li>
-								<li><a href="{{path('app_crud_utilisateur_index')}}">Gérer les utilisateurs </a></li>
+								<li class= "dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Adminnistration
+									<b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="{{path('app_crud_commentaire_index')}}">Gerer les commentaires</a></li>
+										<li><a href="{{path('app_crud_article_index')}}">Gérer les articles</a></li>
+										<li><a href="{{path('app_crud_utilisateur_index')}}">Gérer les utilisateurs </a></li>
+									</ul>
+								
+								</li>
+								
+								
 							{% endif %}
 								<li><a href="{{path('user_article',{'user' : app.user.id})}}">Mes articles</a></li>
+								<li><a href="{{path('user_commentaire',{'user' : app.user.id})}}">Mes commentaires</a></li>
 								<li><a href="{{path('app_crud_article_new')}}">Ajouter un article</a></li>
 								<li><a class="btn" href="{{path('app_logout')}}">Déconnexion</a></li>
 						{% else %}
@@ -64,9 +77,9 @@
 	<header id="head">
 		<div class="container">
 			<div class="row">
-				<h1 class="lead">AWESOME, CUSTOMIZABLE, FREE</h1>
-				<p class="tagline">PROGRESSUS: free business bootstrap template by <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus">GetTemplate</a></p>
-				<p><a class="btn btn-default btn-lg" role="button">MORE INFO</a> <a class="btn btn-action btn-lg" role="button">DOWNLOAD NOW</a></p>
+				<h1 class="lead">BIENVENUE SUR LE BLOG - SANS TABOU</h1>
+				<p class="tagline">Exprimer vous librement et interagissez avec des utilisateurs du monde entier</p>
+				<p><a href="{{path('app_crud_article_new')}}" class="btn btn-default btn-lg" role="button">Ecrivez votre premier article </a> <a href="#article" class="btn btn-action btn-lg" role="button">lire les articles</a></p>
 			</div>
 		</div>
 	</header>
@@ -105,15 +118,15 @@
 						<h3 class="widget-title">Contact</h3>
 						<div class="widget-body">
 							<p>+234 23 9873237<br>
-								<a href="mailto:#">some.email@somewhere.com</a><br>
+								<a href="mailto:#">contact@sanstabou.com</a><br>
 								<br>
-								234 Hidden Pond Road, Ashland City, TN 37015
+								12 boulevard olivier, Marseille 13008
 							</p>	
 						</div>
 					</div>
 
 					<div class="col-md-3 widget">
-						<h3 class="widget-title">Follow me</h3>
+						<h3 class="widget-title">Suivez nous !</h3>
 						<div class="widget-body">
 							<p class="follow-me-icons">
 								<a href=""><i class="fa fa-twitter fa-2"></i></a>
@@ -125,10 +138,9 @@
 					</div>
 
 					<div class="col-md-6 widget">
-						<h3 class="widget-title">Text widget</h3>
+						<h3 class="widget-title">A Propos</h3>
 						<div class="widget-body">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id expedita cupiditate repellendus possimus unde?</p>
-							<p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit architecto sint libero illo et hic.</p>
+							<p>Ce blog a été créer dans le but de permettre aux personnes de voir s'exprimer librement, échanger et interagir avec des utilisateurs du monde entier </p>
 						</div>
 					</div>
 
