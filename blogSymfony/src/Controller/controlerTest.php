@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\DependencyInjection\Security\UserProvider\EntityFactory;
+use Symfony\Component\Validator\Constraints\Length;
 
 //#[Route('/route1', name: 'route1')]
 class controlerTest extends AbstractController
@@ -24,14 +25,37 @@ class controlerTest extends AbstractController
         return new Response("l'addition de " . $x . ' + ' . $y . 'est égale à ' . $result);
     }
 
+
     #[Route('/acceuil', name: 'acceuil')]
     public function acceuil(ManagerRegistry $manager)
     {
         //Récupération des articles pour les afficher en pages d'acceuil
         $repository = $manager->getRepository(Article::class);
         $articles = $repository->findAll();
-        return $this->render('/index.html.twig', ['articles' => $articles]);
+
+        return $this->render('/index.html.twig', ['articles' => $articles,]);
     }
+    /* #[Route('/acceuil/{x?1}', name: 'acceuil')]
+    public function acceuil(ManagerRegistry $manager, $x)
+    {
+        //Récupération des articles pour les afficher en pages d'acceuil
+        $repository = $manager->getRepository(Article::class);
+        $articles = $repository->findAll();
+        $pages = [[]];
+        $i = 0;
+        $j = 1;
+        foreach ($articles as $article) {
+            if ($j == 10) {
+                $j = 0;
+                $i += 1;
+            }
+            array_push($pages[$i][], $article);
+            $j += 1;
+        }
+
+
+        return $this->render('/index.html.twig', ['articles' => $pages, 'page' => $x]);
+    }*/
 
     #[Route('/connexion', name: 'connexion')]
     public function connexion()
